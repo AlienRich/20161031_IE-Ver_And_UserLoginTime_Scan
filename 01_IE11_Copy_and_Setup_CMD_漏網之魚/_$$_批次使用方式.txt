@@ -1,0 +1,17 @@
+1.先執行IP-SCAN確認網域下的機器IP，貼入"IPList_ALL.txt"。
+
+2.00_OSScan_ScanIP.bat-->確認OS版本
+	--->會產生IPList_x64.txt、IPList_x86.txt檔案
+	--->複製到Bat-x64、Bat-x86下。
+
+3.各網段的171都是FILE-SERVER，由那裏發動複製到同網段。
+	--->將批次檔全部複製到該網段171下
+	--->執行"01_IE11_Copy_&_Setup_CMD\Bat-x64\01_IECopy_x64.bat"
+	--->執行"01_IE11_Copy_&_Setup_CMD\Bat-x86\01_IECopy_x64.bat"
+
+4.待執行時間到...
+	--->01_IE11_Copy_&_Setup_CMD\Bat-x64\02_IESetup_x64.bat
+	--->01_IE11_Copy_&_Setup_CMD\Bat-x86\02_IESetup_x86.bat
+
+5.第4項全部DOS視窗結束之後，等待10分鐘，發動強制GPUPDATE。
+	01_IE11_Copy_&_Setup_CMD\03_GPUpdate.bat

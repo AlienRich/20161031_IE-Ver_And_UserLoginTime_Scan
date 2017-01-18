@@ -1,0 +1,87 @@
+@echo OFF
+
+SET @Prefix=IPList_x86
+set Log=.\_roboCopy_ie11_86.log
+echo RUN_TIME：%date% %time% > %Log%
+
+::::::::設定已複製IE11的share位置，複製到新位置。
+set LocalShareIE11Path=D:\Share\Branch\IE11Setup\IE11-x86
+set NewLocalIE11Path=D:\temp\IE11Setup\IE11-x86
+robocopy %LocalShareIE11Path% %NewLocalIE11Path% /r:3 /w:0 /mir
+cls
+robocopy %LocalShareIE11Path% %NewLocalIE11Path% /r:3 /w:0 /mir
+ECHO ##############################################################
+ECHO # 執行前請確定下列事項：(此版本為x86)
+ECHO # 1.IP-Scan已完成，並排除不安裝IE11機器。
+ECHO # 2.確認本地端D:\Share\Branch\IE11已複製到D:\temp\IE11Setup。
+ECHO # 3.檢查目錄檔案是否正確。
+ECHO ##############################################################
+PAUSE
+
+robocopy \\CDBUHD\Download\0_IE11\IE11-x86 %NewLocalIE11Path% /r:3 /w:0 /mir
+robocopy %NewLocalIE11Path% %LocalShareIE11Path% /r:3 /w:0 /mir
+CLS
+robocopy \\CDBUHD\Download\0_IE11\IE11-x86 D:\temp\IE11Setup\IE11-x86 /r:3 /w:0 /mir
+set CDBUHDIE11Path=\\CDBUHD\Download\0_IE11
+for /f %%a in ('dir %CDBUHDIE11Path%\IE11-x86 /b') do (if not exist %NewLocalIE11Path%\%%a echo 【%NewLocalIE11Path%\%%a】檔案不存在)
+ECHO ##############################################################
+ECHO # 執行前請確定下列事項：(此版本為x86)
+ECHO # 1.檢查目錄檔案是否正確 D:\temp\IE11Setup。
+ECHO # 2.檔案無缺少即可向下執行，複製檔案到USER電腦。
+ECHO # 3.若有跳出"檔案不存在"訊息，請將此批次關閉。
+ECHO ##############################################################
+PAUSE
+
+robocopy \\CDBUHD\Download\0_IE11\IE11-x86 D:\temp\IE11Setup\IE11-x86 /r:3 /w:0 /mir /log+:%Log%
+
+echo ### >> %Log%
+echo ### >> %Log%
+echo ### >> %Log%
+echo ################################################################################################################### >> %Log%
+echo ################################################################################################################### >> %Log%
+echo ### >> %Log%
+echo ### >> %Log%
+echo ### >> %Log%
+for /f %%i in (.\%@Prefix%.txt) do (
+	Echo ===========================================================================================
+	Echo %%i_%date%_%time%
+	start robocopy D:\temp\IE11Setup\IE11-x86 \\%%i\D$\temp\IE11Setup\IE11-x86 /r:3 /w:0 /mir /log+:%Log%
+	timeout /t 3
+	)
+
+
+timeout /t 1200
+echo ### > %Log%
+echo ### >> %Log%
+echo ### >> %Log%
+echo ################################################################################################################### >> %Log%
+echo ################################################################################################################### >> %Log%
+echo ### >> %Log%
+echo ### >> %Log%
+echo ### >> %Log%
+for /f %%i in (.\%@Prefix%.txt) do (
+	Echo ===========================================================================================
+	Echo %%i_%date%_%time%
+	start robocopy D:\temp\IE11Setup\IE11-x86 \\%%i\D$\temp\IE11Setup\IE11-x86 /r:3 /w:0 /mir /log+:%Log%
+	timeout /t 3
+	)
+
+
+timeout /t 900
+echo ### > %Log%
+echo ### >> %Log%
+echo ### >> %Log%
+echo ################################################################################################################### >> %Log%
+echo ################################################################################################################### >> %Log%
+echo ### >> %Log%
+echo ### >> %Log%
+echo ### >> %Log%
+for /f %%i in (.\%@Prefix%.txt) do (
+	Echo ===========================================================================================
+	Echo %%i_%date%_%time%
+	start robocopy D:\temp\IE11Setup\IE11-x86 \\%%i\D$\temp\IE11Setup\IE11-x86 /r:3 /w:0 /mir /log+:%Log%
+	timeout /t 3
+	)
+
+
+:::::	start xcopy \\CDBUHD\Download\0_IE11\IE11-x86\*.* \\%%i\D$\temp\IE11Setup\ /Y /S
